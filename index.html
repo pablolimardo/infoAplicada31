@@ -947,7 +947,7 @@
                             <h4>SGBD - Sistemas de Gestión</h4>
                             <ul class="topic-list">
                                 <li><strong>¿Qué es?</strong> Software para crear y administrar bases de datos</li>
-                                <li><strong>Motores:</strong> Microsoft SQL Server, MySQL, PostgreSQL</li>
+                                <li><strong>Motores:</strong> SQLite, Microsoft SQL Server, MySQL, PostgreSQL</li>
                                 <li>Funciones: Crear, consultar, modificar, eliminar datos</li>
                             </ul>
                         </div>
@@ -1026,7 +1026,6 @@
     <!-- FOOTER -->
     <footer>
         <p>Informática Aplicada 3° ACPI | Última actualización: Octubre 2025</p>
-        <p>💻 Preparado con dedicación para tu éxito académico</p>
     </footer>
 
     <!-- JAVASCRIPT -->
@@ -1115,18 +1114,14 @@
         });
 
         // Toggle de unidades (mobile - acordeón)
-        function toggleUnit(header) {
-            if (!isDesktop()) {
-                const card = header.parentElement;
-                card.classList.toggle('active');
-                
-                // Guardar estado
-                const index = Array.from(document.querySelectorAll('.unit-card')).indexOf(card);
-                if (card.classList.contains('active')) {
-                    localStorage.setItem(`unit-${index}`, 'active');
-                } else {
-                    localStorage.removeItem(`unit-${index}`);
-                }
+        function toggleUnit(card, index) {
+            card.classList.toggle('active');
+            
+            // Guardar estado
+            if (card.classList.contains('active')) {
+                localStorage.setItem(`unit-${index}`, 'active');
+            } else {
+                localStorage.removeItem(`unit-${index}`);
             }
         }
 
@@ -1135,30 +1130,31 @@
             const unitCards = document.querySelectorAll('.unit-card');
             
             unitCards.forEach((card, index) => {
-                // Click en la tarjeta completa (desktop)
-                card.addEventListener('click', function(e) {
-                    if (isDesktop() && !e.target.closest('.unit-header')) {
-                        openModal(index);
-                    }
-                });
-                
-                // Click en el header (desktop o mobile)
                 const header = card.querySelector('.unit-header');
+                
+                // Click en el header
                 header.addEventListener('click', function(e) {
+                    e.preventDefault();
                     e.stopPropagation();
+                    
                     if (isDesktop()) {
                         openModal(index);
                     } else {
-                        toggleUnit(header);
+                        toggleUnit(card, index);
+                    }
+                });
+                
+                // Click en toda la tarjeta (solo desktop)
+                card.addEventListener('click', function(e) {
+                    if (isDesktop() && e.target === card) {
+                        openModal(index);
                     }
                 });
                 
                 // Restaurar estado de acordeón en mobile
-                if (!isDesktop()) {
-                    const savedState = localStorage.getItem(`unit-${index}`);
-                    if (savedState === 'active') {
-                        card.classList.add('active');
-                    }
+                const savedState = localStorage.getItem(`unit-${index}`);
+                if (savedState === 'active' && !isDesktop()) {
+                    card.classList.add('active');
                 }
             });
         });
