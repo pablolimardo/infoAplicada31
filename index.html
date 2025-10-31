@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informática Aplicada 3° ACPI | Tu Guía de Estudio</title>
+    <style>
+        /* ===== VARIABLES Y RESET ===== */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --dark: #1e293b;
+            --dark-light: #334155;
+            --gray: #64748b;
+            --light: #f1f5f9;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* ===== HEADER ===== */
+        header {
+            background: var(--white);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.25rem;
+            color: var(--dark);
+        }
+        
+        .course-info {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        
+        /* ===== HERO SECTION ===== */
+        .hero {
+            background: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .hero h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .progress-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 15px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 1s ease;
+            animation: fillProgress 2s ease forwards;
+        }
+        
+        @keyframes fillProgress {
+            to { width: 33%; }
+        }
+        
+        /* ===== MAIN CONTENT ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .intro-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .intro-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        /* ===== UNITS GRID ===== */
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .unit-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .unit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .unit-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .unit-number {
+            font-size: 3rem;
+            opacity: 0.3;
+            font-weight: 700;
+            position: absolute;
+            right: 1rem;
+            top: 0.5rem;
+        }
+        
+        .unit-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .unit-card.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .unit-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .unit-card.active .unit-content {
+            max-height: 2000px;
+        }
+        
+        .unit-body {
+            padding: 1.5rem;
+        }
+        
+        .topic-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .topic-section h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .topic-section h4::before {
+            content: "📌";
+        }
+        
+        .topic-list {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+        
+        .topic-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--dark-light);
+        }
+        
+        .topic-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .topic-list li strong {
+            color: var(--dark);
+        }
+        
+        /* ===== COLOR VARIANTS ===== */
+        .unit-card:nth-child(2) .unit-header {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+        }
+        
+        .unit-card:nth-child(3) .unit-header {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .unit-card:nth-child(4) .unit-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .unit-card:nth-child(5) .unit-header {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .unit-card:nth-child(6) .unit-header {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+        
+        /* ===== TIPS SECTION ===== */
+        .tips-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .tips-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tip-card {
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .tip-card:nth-child(2) {
+            border-left-color: var(--secondary);
+        }
+        
+        .tip-card:nth-child(3) {
+            border-left-color: var(--accent);
+        }
+        
+        .tip-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tip-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .tip-card p {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer p {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        /* ===== MODAL (Desktop) ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: 2rem;
+            border-radius: 20px 20px 0 0;
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-header::before {
+            content: attr(data-number);
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 6rem;
+            font-weight: 700;
+            opacity: 0.2;
+        }
+        
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            z-index: 1;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .modal-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        /* Modal color variants */
+        .modal-content[data-unit="1"] .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        
+        .modal-content[data-unit="2"] .modal-header {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+        }
+        
+        .modal-content[data-unit="3"] .modal-header {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .modal-content[data-unit="4"] .modal-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .modal-content[data-unit="5"] .modal-header {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .modal-content[data-unit="6"] .modal-header {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 769px) {
+            /* En desktop, ocultar contenido de acordeón */
+            .unit-content {
+                display: none !important;
+            }
+            
+            /* Hacer clickeable toda la tarjeta */
+            .unit-card {
+                cursor: pointer;
+            }
+            
+            .unit-header {
+                cursor: pointer;
+            }
+            
+            /* Ocultar el icono de toggle en desktop */
+            .toggle-icon {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+            
+            .units-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .unit-number {
+                font-size: 2rem;
+            }
+            
+            /* En mobile, mantener acordeones */
+            .modal-overlay {
+                display: none !important;
+            }
+        }
+        
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .unit-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .unit-card:nth-child(1) { animation-delay: 0.1s; }
+        .unit-card:nth-child(2) { animation-delay: 0.2s; }
+        .unit-card:nth-child(3) { animation-delay: 0.3s; }
+        .unit-card:nth-child(4) { animation-delay: 0.4s; }
+        .unit-card:nth-child(5) { animation-delay: 0.5s; }
+        .unit-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">💻</div>
+                <div>
+                    <h1>Informática Aplicada</h1>
+                    <p class="course-info">3° 1° ACPI</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h2>¡Bienvenido a tu Guía de Estudio! 🚀</h2>
+        <p>
+            Este es tu espacio para revisar todos los temas del año. Cada unidad está diseñada para que puedas 
+            estudiar de forma clara y organizada. ¡Vamos a por ese último trimestre!
+        </p>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Progreso del curso</span>
+                <span>Tercer Trimestre</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- INTRO CARD -->
+        <div class="intro-card">
+            <h3>¿Cómo usar esta guía?</h3>
+            <p>
+                Cada unidad tiene todos los temas que vimos durante el año. Hacé clic en cualquier unidad 
+                para expandirla y ver el contenido detallado. Los conceptos clave están <strong>destacados</strong> 
+                para que los identifiques rápido. ¡No te olvides de repasar los ejemplos prácticos!
+            </p>
+        </div>
+
+        <!-- UNITS GRID -->
+        <div class="units-grid">
+            <!-- UNIDAD 1: SISTEMA INFORMÁTICO -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <span class="unit-number">01</span>
+                    <h3 class="unit-title">Sistema Informático</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-body">
+                        <div class="topic-section">
+                            <h4>Conceptos Fundamentales</h4>
+                            <ul class="topic-list">
+                                <li><strong>Informática:</strong> Es la ciencia que estudia el tratamiento automático de la información mediante computadoras</li>
+                                <li><strong>Sistema y Subsistema:</strong> Un sistema informático es un conjunto de elementos que trabajan juntos</li>
+                                <li>Los <strong>5 elementos</strong> son: físico (hardware), lógico (software), humano (usuarios), dato (entrada) e información (salida)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Evolución Tecnológica</h4>
+                            <ul class="topic-list">
+                                <li><strong>Generaciones de computadoras:</strong> Desde las válvulas de vacío hasta la inteligencia artificial</li>
+                                <li>1° Generación: Válvulas (1940-1956)</li>
+                                <li>2° Generación: Transistores (1956-1963)</li>
+                                <li>3° Generación: Circuitos integrados (1964-1971)</li>
+                                <li>4° Generación: Microprocesadores (1971-presente)</li>
+                                <li>5° Generación: Inteligencia Artificial (presente-futuro)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Hardware (Recursos Físicos)</h4>
+                            <ul class="topic-list">
+                                <li><strong>Periféricos de entrada:</strong> teclado, mouse, micrófono, scanner</li>
+                                <li><strong>Periféricos de salida:</strong> monitor, impresora, parlantes</li>
+                                <li><strong>Periféricos de E/S:</strong> pantallas táctiles, impresoras multifunción</li>
+                                <li><strong>Almacenamiento:</strong> HDD, SSD, USB, tarjetas de memoria</li>
+                                <li>Unidades: Bit, Byte, KB, MB, GB, TB</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Software (Recursos Lógicos)</h4>
+                            <ul class="topic-list">
+                                <li><strong>Software de Sistema:</strong> Windows, Linux, macOS</li>
+                                <li><strong>Software de Programación:</strong> Python, Visual Studio, compiladores</li>
+                                <li><strong>Lenguajes:</strong> Alto nivel (Python, Java) vs Bajo nivel (Ensamblador)</li>
+                                <li><strong>Software de Aplicación:</strong> Word, Excel, Chrome, Photoshop</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIDAD 2: SISTEMA OPERATIVO -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <span class="unit-number">02</span>
+                    <h3 class="unit-title">Sistema Operativo</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-body">
+                        <div class="topic-section">
+                            <h4>Fundamentos del SO</h4>
+                            <ul class="topic-list">
+                                <li><strong>¿Qué es?</strong> Software que gestiona el hardware y permite que funcionen otros programas</li>
+                                <li><strong>Sesión de trabajo:</strong> Inicio de sesión → Trabajo → Cierre de sesión</li>
+                                <li><strong>El Escritorio:</strong> Tu espacio de trabajo visual</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Elementos de la Interfaz</h4>
+                            <ul class="topic-list">
+                                <li><strong>Botones:</strong> Inicio, cerrar, minimizar, maximizar</li>
+                                <li><strong>Iconos:</strong> Representación gráfica de archivos y programas</li>
+                                <li><strong>Ventanas:</strong> Espacios donde se ejecutan las aplicaciones</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Explorador de Windows</h4>
+                            <ul class="topic-list">
+                                <li><strong>Unidades:</strong> C:, D:, USB, discos externos</li>
+                                <li><strong>Carpetas:</strong> Contenedores para organizar archivos</li>
+                                <li><strong>Archivos:</strong> Documentos, imágenes, videos, etc.</li>
+                                <li>Operaciones: Crear, copiar, mover, eliminar, renombrar</li>
+                                <li><strong>Búsqueda:</strong> Encontrar archivos rápidamente</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIDAD 3: PROCESADOR DE TEXTO -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <span class="unit-number">03</span>
+                    <h3 class="unit-title">Procesador de Texto</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-body">
+                        <div class="topic-section">
+                            <h4>Operaciones Básicas</h4>
+                            <ul class="topic-list">
+                                <li><strong>Crear documentos:</strong> Diseño y planificación del contenido</li>
+                                <li><strong>Edición:</strong> Suprimir, trasladar, copiar e insertar texto</li>
+                                <li><strong>Guardar:</strong> .doc, .docx, .pdf</li>
+                                <li><strong>Imprimir:</strong> Configuración de página y vista previa</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Formato de Texto</h4>
+                            <ul class="topic-list">
+                                <li><strong>Fuentes:</strong> Arial, Times New Roman, tamaño, color</li>
+                                <li><strong>Estilos:</strong> Negrita, cursiva, subrayado</li>
+                                <li><strong>Espaciado:</strong> Interlineado, espaciado entre párrafos</li>
+                                <li><strong>Alineación:</strong> Izquierda, centro, derecha, justificado</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Formato de Párrafo</h4>
+                            <ul class="topic-list">
+                                <li><strong>Sangría:</strong> Primera línea, francesa, izquierda, derecha</li>
+                                <li><strong>Tabulaciones:</strong> Organizar texto en columnas</li>
+                                <li><strong>Viñetas y numeración:</strong> Listas ordenadas y desordenadas</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Herramientas Avanzadas</h4>
+                            <ul class="topic-list">
+                                <li><strong>Tablas:</strong> Organizar información en filas y columnas</li>
+                                <li>Crear, editar, ordenar y dar formato a tablas</li>
+                                <li><strong>Imágenes:</strong> Insertar, ajustar tamaño, posición</li>
+                                <li><strong>Relación texto-imagen:</strong> Ajuste de texto alrededor</li>
+                                <li><strong>Gráficos:</strong> Torta, barras para visualizar datos</li>
+                                <li><strong>Hipervínculos:</strong> Enlaces a páginas web o documentos</li>
+                                <li><strong>Combinación de correspondencia:</strong> Documento principal + fuente de datos</li>
+                                <li><strong>Columnas:</strong> Texto estilo periodístico</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Presentaciones Multimedia</h4>
+                            <ul class="topic-list">
+                                <li><strong>PowerPoint:</strong> Herramienta para presentaciones</li>
+                                <li><strong>Plantillas y diseños:</strong> Autocontenido y autodiseño</li>
+                                <li><strong>Vistas:</strong> Normal, clasificador, presentación</li>
+                                <li><strong>Animaciones:</strong> Transiciones entre diapositivas</li>
+                                <li><strong>Multimedia:</strong> Imágenes, tablas, audio y video</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIDAD 4: DESARROLLO WEB -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <span class="unit-number">04</span>
+                    <h3 class="unit-title">Desarrollo Web (HTML & CSS)</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-body">
+                        <div class="topic-section">
+                            <h4>Conceptos Web</h4>
+                            <ul class="topic-list">
+                                <li><strong>Internet:</strong> Red mundial de computadoras conectadas</li>
+                                <li><strong>Web:</strong> Servicio de páginas conectadas por hipervínculos</li>
+                                <li><strong>Navegadores:</strong> Chrome, Firefox, Edge, Safari</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>HTML - Estructura</h4>
+                            <ul class="topic-list">
+                                <li><strong>Estructura básica:</strong> &lt;html&gt;, &lt;head&gt;, &lt;body&gt;</li>
+                                <li><strong>Encabezados:</strong> &lt;h1&gt; hasta &lt;h6&gt;</li>
+                                <li><strong>Párrafos:</strong> &lt;p&gt;</li>
+                                <li><strong>Listas:</strong> &lt;ul&gt; (desordenadas), &lt;ol&gt; (ordenadas), &lt;li&gt;</li>
+                                <li><strong>Hipervínculos:</strong> &lt;a href="url"&gt;</li>
+                                <li><strong>Imágenes:</strong> &lt;img src="ruta" alt="descripción"&gt;</li>
+                                <li><strong>Videos:</strong> &lt;video&gt;</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Tablas en HTML</h4>
+                            <ul class="topic-list">
+                                <li><strong>&lt;table&gt;:</strong> Define la tabla</li>
+                                <li><strong>&lt;tr&gt;:</strong> Fila de la tabla</li>
+                                <li><strong>&lt;td&gt;:</strong> Celda de datos</li>
+                                <li><strong>&lt;th&gt;:</strong> Celda de encabezado</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Formularios</h4>
+                            <ul class="topic-list">
+                                <li><strong>&lt;form&gt;:</strong> Contenedor del formulario</li>
+                                <li><strong>&lt;input&gt;:</strong> Campos de entrada (text, email, password)</li>
+                                <li><strong>&lt;label&gt;:</strong> Etiquetas para los campos</li>
+                                <li><strong>&lt;button&gt;:</strong> Botón de envío</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>CSS - Estilo</h4>
+                            <ul class="topic-list">
+                                <li><strong>Separación:</strong> HTML (estructura) vs CSS (presentación)</li>
+                                <li><strong>Formas de aplicar:</strong> Inline, &lt;style&gt;, archivo externo (.css)</li>
+                                <li><strong>Selectores:</strong> tipo, .clase, #id</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Box Model</h4>
+                            <ul class="topic-list">
+                                <li><strong>Content:</strong> El contenido del elemento</li>
+                                <li><strong>Padding:</strong> Espacio interno</li>
+                                <li><strong>Border:</strong> Borde del elemento</li>
+                                <li><strong>Margin:</strong> Espacio externo</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Propiedades CSS</h4>
+                            <ul class="topic-list">
+                                <li><strong>Tipografía:</strong> font-family, font-size, color</li>
+                                <li><strong>Flexbox:</strong> display: flex para organizar elementos</li>
+                                <li><strong>Responsive:</strong> viewport y media queries para móviles</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIDAD 5: PLANILLA DE CÁLCULO -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <span class="unit-number">05</span>
+                    <h3 class="unit-title">Planilla de Cálculo</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-body">
+                        <div class="topic-section">
+                            <h4>Conceptos Fundamentales</h4>
+                            <ul class="topic-list">
+                                <li><strong>Modelización:</strong> Representar situaciones del mundo real con datos</li>
+                                <li><strong>Análisis de datos:</strong> Procesar información para tomar decisiones</li>
+                                <li><strong>Validación:</strong> Verificar que el modelo funcione correctamente</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Estructura de Excel</h4>
+                            <ul class="topic-list">
+                                <li><strong>Libro:</strong> Archivo de Excel (.xlsx)</li>
+                                <li><strong>Hojas:</strong> Pestañas dentro del libro</li>
+                                <li><strong>Filas:</strong> Numeradas (1, 2, 3...)</li>
+                                <li><strong>Columnas:</strong> Letradas (A, B, C...)</li>
+                                <li><strong>Celdas:</strong> Intersección de fila y columna (A1, B5, C10)</li>
+                                <li><strong>Rangos:</strong> Grupo de celdas (A1:C5)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Tipos de Datos</h4>
+                            <ul class="topic-list">
+                                <li><strong>Texto:</strong> Palabras y letras</li>
+                                <li><strong>Números:</strong> Enteros y decimales</li>
+                                <li><strong>Fechas:</strong> dd/mm/aaaa</li>
+                                <li><strong>Fórmulas:</strong> Comienzan con =</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Operaciones</h4>
+                            <ul class="topic-list">
+                                <li><strong>Básicas:</strong> Copiar, cortar, pegar, rellenar</li>
+                                <li><strong>Formato:</strong> Negrita, color, bordes, combinar celdas</li>
+                                <li><strong>Ordenar:</strong> Ascendente, descendente</li>
+                                <li><strong>Filtrar:</strong> Mostrar solo ciertos datos</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Fórmulas y Funciones</h4>
+                            <ul class="topic-list">
+                                <li><strong>Operadores:</strong> + (suma), - (resta), * (multiplicación), / (división)</li>
+                                <li><strong>SUMA:</strong> =SUMA(A1:A10)</li>
+                                <li><strong>PROMEDIO:</strong> =PROMEDIO(A1:A10)</li>
+                                <li><strong>MAX/MIN:</strong> Valor máximo y mínimo</li>
+                                <li><strong>CONTAR:</strong> Cuenta celdas con números</li>
+                                <li><strong>SI:</strong> =SI(condición, verdadero, falso)</li>
+                                <li><strong>Referencias:</strong> Relativas (A1) y Absolutas ($A$1)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Gráficos</h4>
+                            <ul class="topic-list">
+                                <li><strong>Tipos:</strong> Columnas, líneas, torta, barras</li>
+                                <li><strong>Elementos:</strong> Título, ejes, leyenda</li>
+                                <li>Seleccionar datos → Insertar → Gráfico</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIDAD 6: BASES DE DATOS -->
+            <div class="unit-card">
+                <div class="unit-header" onclick="toggleUnit(this)">
+                    <span class="unit-number">06</span>
+                    <h3 class="unit-title">Bases de Datos</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-body">
+                        <div class="topic-section">
+                            <h4>Conceptos Básicos</h4>
+                            <ul class="topic-list">
+                                <li><strong>Base de Datos:</strong> Colección organizada de información</li>
+                                <li><strong>Tabla:</strong> Estructura que contiene datos relacionados</li>
+                                <li><strong>Registro:</strong> Fila de la tabla (una entrada completa)</li>
+                                <li><strong>Campo:</strong> Columna de la tabla (un tipo de dato)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Tipos de Bases de Datos</h4>
+                            <ul class="topic-list">
+                                <li><strong>Relacionales:</strong> Datos organizados en tablas relacionadas</li>
+                                <li><strong>No Relacionales:</strong> Documentos, gráficos, clave-valor</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>SGBD - Sistemas de Gestión</h4>
+                            <ul class="topic-list">
+                                <li><strong>¿Qué es?</strong> Software para crear y administrar bases de datos</li>
+                                <li><strong>Motores:</strong> Microsoft SQL Server, MySQL, PostgreSQL</li>
+                                <li>Funciones: Crear, consultar, modificar, eliminar datos</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>SQL - Lenguaje de Consulta</h4>
+                            <ul class="topic-list">
+                                <li><strong>SQL:</strong> Structured Query Language</li>
+                                <li><strong>Historia:</strong> Creado en los años 70 por IBM</li>
+                                <li>Es el lenguaje estándar para bases de datos relacionales</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Sentencia SELECT</h4>
+                            <ul class="topic-list">
+                                <li><strong>Estructura básica:</strong> SELECT campos FROM tabla WHERE condición</li>
+                                <li><strong>Ejemplo 1:</strong> SELECT * FROM Alumnos</li>
+                                <li><strong>Ejemplo 2:</strong> SELECT Nombre, Edad FROM Alumnos WHERE Edad > 15</li>
+                                <li><strong>FROM:</strong> Especifica la tabla</li>
+                                <li><strong>WHERE:</strong> Filtra los resultados</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="topic-section">
+                            <h4>Práctica con SGBD</h4>
+                            <ul class="topic-list">
+                                <li><strong>Instalación:</strong> Configurar SQL Server o MySQL</li>
+                                <li><strong>Entorno de trabajo:</strong> Interfaz gráfica o línea de comandos</li>
+                                <li><strong>Servicios:</strong> Iniciar y detener el motor de BD</li>
+                                <li><strong>Crear tablas:</strong> Definir estructura y tipos de datos</li>
+                                <li><strong>Consultar:</strong> Usar SELECT para obtener información</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIPS SECTION -->
+        <div class="tips-section">
+            <h3>💡 Tips para Estudiar Mejor</h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">📚</div>
+                    <h4>Practica con ejemplos</h4>
+                    <p>No solo leas la teoría. Abrí Word, Excel o un editor de código y probá hacer ejemplos propios. ¡Es la mejor forma de aprender!</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🎯</div>
+                    <h4>Hacé resúmenes</h4>
+                    <p>Creá tus propios resúmenes con las palabras clave destacadas. Escribir te ayuda a memorizar mejor.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">👥</div>
+                    <h4>Estudiá en grupo</h4>
+                    <p>Explicarle un tema a un compañero es la mejor forma de asegurarte de que realmente lo entendiste.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL (para desktop) -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent" data-unit="1">
+            <div class="modal-header" data-number="01">
+                <h3 class="modal-title" id="modalTitle">Título de la Unidad</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- El contenido se insertará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Informática Aplicada 3° ACPI | Última actualización: Octubre 2025</p>
+        <p>💻 Preparado con dedicación para tu éxito académico</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Detectar si estamos en desktop o mobile
+        function isDesktop() {
+            return window.innerWidth > 768;
+        }
+
+        // Datos de las unidades
+        const unitsData = [
+            {
+                number: "01",
+                title: "Sistema Informático",
+                color: "1"
+            },
+            {
+                number: "02",
+                title: "Sistema Operativo",
+                color: "2"
+            },
+            {
+                number: "03",
+                title: "Procesador de Texto",
+                color: "3"
+            },
+            {
+                number: "04",
+                title: "Desarrollo Web (HTML & CSS)",
+                color: "4"
+            },
+            {
+                number: "05",
+                title: "Planilla de Cálculo",
+                color: "5"
+            },
+            {
+                number: "06",
+                title: "Bases de Datos",
+                color: "6"
+            }
+        ];
+
+        // Función para abrir modal (desktop)
+        function openModal(unitIndex) {
+            const card = document.querySelectorAll('.unit-card')[unitIndex];
+            const unitContent = card.querySelector('.unit-body').innerHTML;
+            const unitData = unitsData[unitIndex];
+            
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalContent = document.getElementById('modalContent');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const modalHeader = modalContent.querySelector('.modal-header');
+            
+            // Configurar modal
+            modalContent.setAttribute('data-unit', unitData.color);
+            modalHeader.setAttribute('data-number', unitData.number);
+            modalTitle.textContent = unitData.title;
+            modalBody.innerHTML = unitContent;
+            
+            // Mostrar modal
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar modal
+        function closeModal() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Toggle de unidades (mobile - acordeón)
+        function toggleUnit(header) {
+            if (!isDesktop()) {
+                const card = header.parentElement;
+                card.classList.toggle('active');
+                
+                // Guardar estado
+                const index = Array.from(document.querySelectorAll('.unit-card')).indexOf(card);
+                if (card.classList.contains('active')) {
+                    localStorage.setItem(`unit-${index}`, 'active');
+                } else {
+                    localStorage.removeItem(`unit-${index}`);
+                }
+            }
+        }
+
+        // Configurar event listeners para las tarjetas
+        document.addEventListener('DOMContentLoaded', function() {
+            const unitCards = document.querySelectorAll('.unit-card');
+            
+            unitCards.forEach((card, index) => {
+                // Click en la tarjeta completa (desktop)
+                card.addEventListener('click', function(e) {
+                    if (isDesktop() && !e.target.closest('.unit-header')) {
+                        openModal(index);
+                    }
+                });
+                
+                // Click en el header (desktop o mobile)
+                const header = card.querySelector('.unit-header');
+                header.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (isDesktop()) {
+                        openModal(index);
+                    } else {
+                        toggleUnit(header);
+                    }
+                });
+                
+                // Restaurar estado de acordeón en mobile
+                if (!isDesktop()) {
+                    const savedState = localStorage.getItem(`unit-${index}`);
+                    if (savedState === 'active') {
+                        card.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Manejar cambio de tamaño de ventana
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // Cerrar modal si cambiamos a mobile
+                if (!isDesktop()) {
+                    closeModal();
+                }
+            }, 250);
+        });
+
+        // Agregar efecto de scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
